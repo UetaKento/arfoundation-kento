@@ -129,8 +129,14 @@ EditorBuildSettings:
     path: Assets/Scenes/SimpleAR/SimpleAR.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/SimpleARByKenty/KentySimpleAR.unity
+    guid: ede8aee1fc88e40db89787594e7af0ed
+  - enabled: 0
     path: Assets/MyScenes/FaceBlendShape.unity
     guid: 9ca2bcd153e3f4405826c85f1b9e5ae8
+  - enabled: 0
+    path: Assets/ExternalReceiver.unity
+    guid: a8cb6a0ea0acf0e4399570a0194b57a1
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
       type: 2}

@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARKit;
-
-
+using UnityEngine.UI;
 
 /// <summary>
 /// Populates the action unit coefficients for an <see cref="ARFace"/>.
@@ -15,6 +14,7 @@ using UnityEngine.XR.ARKit;
 /// this component will generate the blend shape coefficients from the underlying <c>ARFace</c>.
 ///
 /// </remarks>
+/// 
 [RequireComponent(typeof(ARFace))]
 public class BlendShapeVisualizer : MonoBehaviour
 {
@@ -22,6 +22,9 @@ public class BlendShapeVisualizer : MonoBehaviour
     float m_CoefficientScale = 100.0f;
     [SerializeField]
     GameObject placementPrefab;
+
+    float goalWeight;
+    Text jawWeightText;
 
     public float coefficientScale
     {
@@ -55,6 +58,8 @@ public class BlendShapeVisualizer : MonoBehaviour
     {
         m_Face = GetComponent<ARFace>();
         CreateFeatureBlendMapping();
+        jawWeightText = GameObject.Find("Text (Legacy)").GetComponent<Text>();
+        goalWeight = Random.Range(50, 100);
     }
 
     void CreateFeatureBlendMapping()
@@ -166,12 +171,14 @@ public class BlendShapeVisualizer : MonoBehaviour
         UpdateVisibility();
         UpdateFaceFeatures();
     }
-
     GameObject instantiatedObject = null;
     void UpdateFaceFeatures()
     {
-        int JawOpenIndex;
-        float JawOpenWeight;
+        int jawOpenIndex;
+        float jawOpenWeight;
+        float goalDistance;
+        float goalPercentage;
+
         // https://futabazemi.net/notes/script_function/
         // ChangeText.instance.ShowMessage("顎検出");のように外部関数を使うとなぜか動かなくなる。
         if (skinnedMeshRenderer == null || !skinnedMeshRenderer.enabled || skinnedMeshRenderer.sharedMesh == null)
@@ -180,12 +187,18 @@ public class BlendShapeVisualizer : MonoBehaviour
         }
         // https://programming.pc-note.net/csharp/dictionary_method.html
         // TryGetValueの第1引数で顔のパーツ(今回は顎の開き具合)を与えて、outを使ってその顔のパーツがある配列の場所(インデックス)を第2引数にもらう。
-        m_FaceArkitBlendShapeIndexMap.TryGetValue(ARKitBlendShapeLocation.JawOpen, out JawOpenIndex);
+        m_FaceArkitBlendShapeIndexMap.TryGetValue(ARKitBlendShapeLocation.JawOpen, out jawOpenIndex);
 
         // https://docs.unity3d.com/ScriptReference/SkinnedMeshRenderer.GetBlendShapeWeight.html
         // TryGetValueで示されたその顔のパーツのインデックスをもとに、その顔のパーツの動いている度合い(BlendShapeWeight)を取得。
-        JawOpenWeight = skinnedMeshRenderer.GetBlendShapeWeight(JawOpenIndex);
-        if (JawOpenWeight >= 50)
+        jawOpenWeight = skinnedMeshRenderer.GetBlendShapeWeight(jawOpenIndex);
+        //jawWeightText.text = jawOpenWeight.ToString();
+
+        goalDistance = Mathf.Abs(jawOpenWeight - goalWeight);
+        goalPercentage = Mathf.Clamp01(goalDistance) * 100;
+        jawWeightText.text = goalPercentage.ToString();
+
+        if (goalDistance < 1)
         {
             instantiatedObject = Instantiate(placementPrefab, new Vector3(0.5f, 0.5f, 0.0f), Quaternion.identity);
         }
@@ -209,5 +222,6 @@ public class BlendShapeVisualizer : MonoBehaviour
             }
         }
     }
+
 }
 
