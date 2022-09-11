@@ -19,7 +19,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
-        List<GameObject> gameObjects = new List<GameObject>();
+        List<GameObject> gameObjectsList = new List<GameObject>();
+        public Text scoreText;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -39,6 +40,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_RaycastManager = GetComponent<ARRaycastManager>();
         }
+
+        //private void Start()
+        //{
+        //    scoreText = GameObject.Find("Score").GetComponent<Text>();
+        //}
 
         bool TryGetTouchPosition(out Vector2 touchPosition)
         {
@@ -64,7 +70,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 var hitPose = s_Hits[0].pose;
 
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                gameObjects.Add(spawnedObject);
+                gameObjectsList.Add(spawnedObject);
+                scoreText.text = gameObjectsList.Count.ToString();
 
                 //if (spawnedObject == null)
                 //{
