@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Meta
   m_EditorClassIdentifier: 
   ExporterVersion: VRoid Studio-1.7.0
-  Title: GawrGura
-  Version: 0.1
-  Author: tuubaa
+  Title: 
+  Version: 
+  Author: 
   ContactInformation: 
   Reference: 
   Thumbnail: {fileID: 2800000, guid: 83a933f7116294355a62373b7c7c767a, type: 3}
