@@ -20,7 +20,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
         List<GameObject> gameObjectsList = new List<GameObject>();
-        public Text scoreText;
+
+        private int paintScore = 0;
+        [SerializeField]
+        Text scoreText;
+        public static KentyPlaceOnPlane instance;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -39,12 +43,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             m_RaycastManager = GetComponent<ARRaycastManager>();
-        }
 
-        //private void Start()
-        //{
-        //    scoreText = GameObject.Find("Score").GetComponent<Text>();
-        //}
+            //if (instance == null)
+            //{
+            //    instance = this;
+            //}
+
+        }
 
         bool TryGetTouchPosition(out Vector2 touchPosition)
         {
@@ -58,6 +63,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return false;
         }
 
+        //void WhenHitScore()
+        //{
+        //    paintScore += 1;
+        //}
+
+        //void WhenNoHitScore()
+        //{
+        //    paintScore += 5;
+        //}
+
+
         void Update()
         {
             if (!TryGetTouchPosition(out Vector2 touchPosition))
@@ -70,8 +86,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 var hitPose = s_Hits[0].pose;
 
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                gameObjectsList.Add(spawnedObject);
-                scoreText.text = gameObjectsList.Count.ToString();
+
+                if (spawnedObject.GetComponent<ScorePrefabManager>().IsCollision)
+                {
+                    paintScore += 1;
+                }
+                else
+                {
+                    paintScore += 5;
+                }
+
+                scoreText.text = paintScore.ToString();
 
                 //if (spawnedObject == null)
                 //{

@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d66d61fcb3c410e84ef9791f996cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlacedPrefab: {fileID: 1934569588295450, guid: b34b6c8f1206a6844b983e23b9da0441,
+  m_PlacedPrefab: {fileID: 8484207394300173943, guid: 418242ae8fe414a42a5e1820c008d3fc,
     type: 3}
   scoreText: {fileID: 73852535}
 --- !u!1 &1488212447
