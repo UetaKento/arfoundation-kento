@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
+//using System.Collections;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -20,11 +21,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
         List<GameObject> gameObjectsList = new List<GameObject>();
+        public Object Object;
 
-        private int paintScore = 0;
+        private float paintScore = 0f;
         [SerializeField]
         Text scoreText;
-        public static KentyPlaceOnPlane instance;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -43,12 +44,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             m_RaycastManager = GetComponent<ARRaycastManager>();
-
-            //if (instance == null)
-            //{
-            //    instance = this;
-            //}
-
         }
 
         bool TryGetTouchPosition(out Vector2 touchPosition)
@@ -85,16 +80,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // will be the closest hit.
                 var hitPose = s_Hits[0].pose;
 
+                //Camera camera = this.gameObject.GetComponent<ARSessionOrigin>().camera;
+                //Ray ray = new Ray(touchPosition, camera.transform.forward);
+                //RaycastHit hit;
+
+                //if (Physics.Raycast(ray, out hit))
+                //{
+
+                //    if (hit.collider.tag == "paintPlane")
+                //    {
+
+                //    }
+                //    else
+                //    {
+                //        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                //    }
+                //}
+
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
 
-                if (spawnedObject.GetComponent<ScorePrefabManager>().IsCollision)
-                {
-                    paintScore += 1;
-                }
-                else
-                {
-                    paintScore += 5;
-                }
+
+                //if (spawnedObject.GetComponent<ScorePrefabManager>().IsCollision)
+                //{
+                //    paintScore += 1f;
+                //}
+                //else
+                //{
+                //    paintScore += 0f;
+                //}
 
                 scoreText.text = paintScore.ToString();
 
@@ -109,7 +122,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+        static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();       
 
         ARRaycastManager m_RaycastManager;
     }

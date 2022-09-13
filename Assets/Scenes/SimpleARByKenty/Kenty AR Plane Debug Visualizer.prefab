@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 23757564266038714}
   - component: {fileID: 120517587746667212}
   m_Layer: 0
-  m_Name: AR Plane Debug Visualizer
+  m_Name: Kenty AR Plane Debug Visualizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da88c2617acace440ac7cacccc82cb89, type: 2}
+  - {fileID: 2100000, guid: 8dd87875a89cc4ff5af916ef72b8bfc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,7 +149,7 @@ LineRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8dd87875a89cc4ff5af916ef72b8bfc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
