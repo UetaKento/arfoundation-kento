@@ -21,7 +21,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
         List<GameObject> gameObjectsList = new List<GameObject>();
-        public Object Object;
 
         private float paintScore = 0f;
         [SerializeField]
@@ -79,26 +78,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // Raycast hits are sorted by distance, so the first one
                 // will be the closest hit.
                 var hitPose = s_Hits[0].pose;
+                Quaternion Fixminus = Quaternion.Euler(-90, 0, 0);
 
-                //Camera camera = this.gameObject.GetComponent<ARSessionOrigin>().camera;
-                //Ray ray = new Ray(touchPosition, camera.transform.forward);
-                //RaycastHit hit;
-
-                //if (Physics.Raycast(ray, out hit))
-                //{
-
-                //    if (hit.collider.tag == "paintPlane")
-                //    {
-
-                //    }
-                //    else
-                //    {
-                //        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                //    }
-                //}
-
-                spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-
+                spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation * Fixminus);
+                //spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
 
                 //if (spawnedObject.GetComponent<ScorePrefabManager>().IsCollision)
                 //{

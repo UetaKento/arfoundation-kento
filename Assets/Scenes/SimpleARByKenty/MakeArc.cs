@@ -23,14 +23,16 @@ public class MakeArc : MonoBehaviour
 
 		vertList.Add(new Vector3(0, 0, 0));  //原点
 
-		float th, v1, v2;
+		float th, v1, v2, random_v1, random_v2;
 		int max = (int)quality * areaAngle / 360;
 		for (int i = 0; i <= max; i++)
 		{
 			th = i * areaAngle / max + startAngle;
 			v1 = Mathf.Sin(th * Mathf.Deg2Rad);
 			v2 = Mathf.Cos(th * Mathf.Deg2Rad);
-			vertList.Add(new Vector3(v1, 0, v2));
+			random_v1 = v1 / Random.Range(2, 5);
+			random_v2 = v2 / Random.Range(2, 5);
+			vertList.Add(new Vector3(random_v1, 0, random_v2));
 			if (i <= max - 1)
 			{
 				triList.Add(0); triList.Add(i + 1); triList.Add(i + 2);
