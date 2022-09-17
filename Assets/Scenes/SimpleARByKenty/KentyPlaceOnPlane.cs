@@ -43,6 +43,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             m_RaycastManager = GetComponent<ARRaycastManager>();
+            m_PlacedPrefab.GetComponent<Renderer>().material.color = Color.red;
         }
 
         bool TryGetTouchPosition(out Vector2 touchPosition)
@@ -57,17 +58,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return false;
         }
 
-        //void WhenHitScore()
-        //{
-        //    paintScore += 1;
-        //}
-
-        //void WhenNoHitScore()
-        //{
-        //    paintScore += 5;
-        //}
-
-
         void Update()
         {
             if (!TryGetTouchPosition(out Vector2 touchPosition))
@@ -78,19 +68,28 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // Raycast hits are sorted by distance, so the first one
                 // will be the closest hit.
                 var hitPose = s_Hits[0].pose;
-                Quaternion Fixminus = Quaternion.Euler(-90, 0, 0);
+                Quaternion Fixminus = Quaternion.Euler(-90, 0, 0);           
 
-                spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation * Fixminus);
-                //spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (paintScore > 100)
+                    {
+                        m_PlacedPrefab.GetComponent<Renderer>().material.color = Color.blue;
+                    }
+                    if (hit.collider.CompareTag("paintPlane"))
+                    {
 
-                //if (spawnedObject.GetComponent<ScorePrefabManager>().IsCollision)
-                //{
-                //    paintScore += 1f;
-                //}
-                //else
-                //{
-                //    paintScore += 0f;
-                //}
+                    }
+                    else
+                    {
+                        paintScore += 1f;
+                        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation * Fixminus);
+                    }
+                    //spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation * Fixminus);
+
+                }
 
                 scoreText.text = paintScore.ToString();
 
